@@ -17,7 +17,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 sample_image = 5
 counter = 1
 distance = 30
-dir_name = 'E:/OneDrive - Institut Teknologi Sepuluh Nopember/Kuliah Teknik Elektro/Semester 3/SEC/Tugas_SEC_Devis/dataset_foto/tes/'
+dir_name = 'E:/MyDrive'
 
 video_capture = cv2.VideoCapture(0)
 while True:
@@ -68,7 +68,7 @@ list_of_files = sorted(
     imfilelist, key=lambda x: os.path.getmtime(os.path.join(dir_name, x)))
 
 # append data to csv file
-with open('test.csv', 'a', newline='') as f_object:
+with open('dataset.csv', 'a', newline='') as f_object:
     # Pass this file object to csv.writer()
     writer_object = writer(f_object)
     for el in list_of_files:
