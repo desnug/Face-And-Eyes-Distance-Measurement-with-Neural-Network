@@ -67,8 +67,7 @@ imfilelist = [os.path.join(dir_name, f)
 list_of_files = sorted(
     imfilelist, key=lambda x: os.path.getmtime(os.path.join(dir_name, x)))
 
-# with open('test.csv', 'w', newline='') as f_output:
-#csv_output = csv.writer(f_output)
+# append data to csv file
 with open('test.csv', 'a', newline='') as f_object:
     # Pass this file object to csv.writer()
     writer_object = writer(f_object)
