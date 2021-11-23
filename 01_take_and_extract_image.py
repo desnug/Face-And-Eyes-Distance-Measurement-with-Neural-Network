@@ -68,7 +68,7 @@ list_of_files = sorted(
     imfilelist, key=lambda x: os.path.getmtime(os.path.join(dir_name, x)))
 
 # append data to csv file
-with open('dataset.csv', 'a', newline='') as f_object:
+with open('dataset_pixel.csv', 'a', newline='') as f_object:
     # Pass this file object to csv.writer()
     writer_object = writer(f_object)
     for el in list_of_files:
