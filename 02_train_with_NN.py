@@ -123,8 +123,8 @@ for j in range(in_tes.size):
         w1, (normalize(in_tes[j].reshape(1, 1), 0, 480))), b1))  # F1(w1*x+b1)
     tes1 = tansig(np.add(np.matmul(w2, tes), b2))  # F2(w2*x+b2)
     out_tes[j] = denormalize(tes1, 0, 480)
-title = 'Grafik Perbandingan\n'
-subtitle = 'Jarak Prediksi vs Perhitungan Manual'
+title = 'Grafik Perbandingan Jarak Wajah Ke Kamera\n'
+subtitle = 'Jarak Prediksi vs Jarak Real'
 plt.title(title + subtitle)
 plt.plot(input_data, output_data, 'co', label="perhitungan manual")
 plt.plot(in_tes, out_tes, 'r--', label="prediksi")

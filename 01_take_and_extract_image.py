@@ -14,12 +14,12 @@ eyeCascade = cv2.CascadeClassifier(
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-sample_image = 5
+sample_image = 10
 counter = 1
-distance = 120
+distance = 30
 dir_name = 'E:/OneDrive - Institut Teknologi Sepuluh Nopember/Kuliah Teknik Elektro/Semester 3/SEC/Tugas_SEC_Devis/dataset_foto/tes/'
 
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture(1)
 while True:
     # Capture frame-by-frame
     ret, frame = video_capture.read()
@@ -43,7 +43,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('c'):
 
         cv2.imwrite(f'{dir_name}{distance}.{counter}.jpg', frame_copy)
-        print(f'save image to-->{counter}, distance: {distance} cm')
+        print(f'capture image->{counter}, with distance: {distance} cm')
         counter += 1
         if counter > sample_image:
             break
@@ -67,8 +67,8 @@ imfilelist = [os.path.join(dir_name, f)
 list_of_files = sorted(
     imfilelist, key=lambda x: os.path.getmtime(os.path.join(dir_name, x)))
 
-with open('test.csv', 'w', newline='') as f_output:
-    csv_output = csv.writer(f_output)
+# with open('test.csv', 'w', newline='') as f_output:
+#csv_output = csv.writer(f_output)
 
 for el in list_of_files:
     imagen = cv2.imread(el)
@@ -92,5 +92,6 @@ for el in list_of_files:
         cv2.putText(imagen, '', (x + ex, y + ey), 1, 1, (0, 255, 0), 1)
 
     data = str(w)+','+str(h)+','+str(ew)+','+str(eh)+','+str(distance)
+    #csv_output.writerow([w, h, ew, eh, distance])
+    # f_output.close()
     print(data)
-    csv_output.writerow([w, h, ew, eh, distance])
