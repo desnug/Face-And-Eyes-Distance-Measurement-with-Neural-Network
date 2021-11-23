@@ -14,12 +14,12 @@ eyeCascade = cv2.CascadeClassifier(
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-sample_image = 10
+sample_image = 5
 counter = 1
 distance = 30
 dir_name = 'E:/OneDrive - Institut Teknologi Sepuluh Nopember/Kuliah Teknik Elektro/Semester 3/SEC/Tugas_SEC_Devis/dataset_foto/tes/'
 
-video_capture = cv2.VideoCapture(1)
+video_capture = cv2.VideoCapture(0)
 while True:
     # Capture frame-by-frame
     ret, frame = video_capture.read()
@@ -69,29 +69,32 @@ list_of_files = sorted(
 
 # with open('test.csv', 'w', newline='') as f_output:
 #csv_output = csv.writer(f_output)
+with open('test.csv', 'a', newline='') as f_object:
+    # Pass this file object to csv.writer()
+    writer_object = writer(f_object)
+    for el in list_of_files:
+        imagen = cv2.imread(el)
+        gray = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
-for el in list_of_files:
-    imagen = cv2.imread(el)
-    gray = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+        # Detect faces
+        faces = faceCascade.detectMultiScale(
+            gray, scaleFactor=1.2, flags=cv2.CASCADE_SCALE_IMAGE)
+        # Draw a rectangle around the faces
+        for (x, y, w, h) in faces:
+            cv2.rectangle(imagen, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            roi_gray = gray[y:y+h, x:x+w]
+            roi_color = imagen[y:y+h, x:x+w]
+            roi_color = imagen[y:y + h, x:x + w]
 
-    # Detect faces
-    faces = faceCascade.detectMultiScale(
-        gray, scaleFactor=1.2, flags=cv2.CASCADE_SCALE_IMAGE)
-    # Draw a rectangle around the faces
-    for (x, y, w, h) in faces:
-        cv2.rectangle(imagen, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_color = imagen[y:y+h, x:x+w]
-        roi_color = imagen[y:y + h, x:x + w]
+        # Detect eyes
+        eyes = eyeCascade.detectMultiScale(roi_gray)
+        # Draw a rectangle around the eyes
+        for (ex, ey, ew, eh) in eyes:
+            cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
+            cv2.putText(imagen, '', (x + ex, y + ey), 1, 1, (0, 255, 0), 1)
 
-    # Detect eyes
-    eyes = eyeCascade.detectMultiScale(roi_gray)
-    # Draw a rectangle around the eyes
-    for (ex, ey, ew, eh) in eyes:
-        cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
-        cv2.putText(imagen, '', (x + ex, y + ey), 1, 1, (0, 255, 0), 1)
+        data = str(w)+','+str(h)+','+str(ew)+','+str(eh)+','+str(distance)
 
-    data = str(w)+','+str(h)+','+str(ew)+','+str(eh)+','+str(distance)
-    #csv_output.writerow([w, h, ew, eh, distance])
-    # f_output.close()
-    print(data)
+        writer_object.writerow([w, h, ew, eh, distance])
+
+        print(data)
