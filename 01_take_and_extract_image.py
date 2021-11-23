@@ -74,7 +74,11 @@ with open('dataset_pixel.csv', 'a', newline='') as f_object:
     for el in list_of_files:
         imagen = cv2.imread(el)
         gray = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
-
+        # To see time added file
+        for file_name in list_of_files:
+            file_path = os.path.join(dir_name, file_name)
+            timestamp_str = time.strftime('%m/%d/%Y :: %H:%M:%S',
+                                          time.gmtime(os.path.getmtime(file_path)))
         # Detect faces
         faces = faceCascade.detectMultiScale(
             gray, scaleFactor=1.2, flags=cv2.CASCADE_SCALE_IMAGE)
