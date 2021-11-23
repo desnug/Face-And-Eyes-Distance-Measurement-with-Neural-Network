@@ -79,6 +79,7 @@ with open('dataset_pixel.csv', 'a', newline='') as f_object:
             file_path = os.path.join(dir_name, file_name)
             timestamp_str = time.strftime('%m/%d/%Y :: %H:%M:%S',
                                           time.gmtime(os.path.getmtime(file_path)))
+            # print(file_name)
         # Detect faces
         faces = faceCascade.detectMultiScale(
             gray, scaleFactor=1.2, flags=cv2.CASCADE_SCALE_IMAGE)
